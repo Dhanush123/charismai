@@ -43,21 +43,10 @@ p.borderBelow {
 }
 
 video {
-  height: 232px;
-  margin: 0 12px 20px 0;
-  vertical-align: top;
-  width: calc(20em - 10px);
+  margin: 12px 12px 12px 12px;
 }
 
-
-video:last-of-type {
-  margin: 0 0 20px 0;
-}
-
-video#gumVideo {
-  margin: 0 20px 20px 0;
-}
-
+/*
 @media screen and (max-width: 500px) {
   button {
     font-size: 0.8em;

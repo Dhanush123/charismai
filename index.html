@@ -1,5 +1,15 @@
 <!DOCTYPE html>
 <html lang="en"><head>
+
+  <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+
+
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -7,93 +17,90 @@
     <meta name="author" content="">
     <link rel="icon" href="https://getbootstrap.com/favicon.ico">
     <link rel="stylesheet" href="css/main.css">
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <title>Charism.ai</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.css" rel="stylesheet">
+<!--     <link href="css/bootstrap.css" rel="stylesheet"> -->
 
     <!-- Custom styles for this template -->
     <link href="css/dashboard.css" rel="stylesheet">
 
-  <style type="text/css">/* Chart.js */
-@-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}</style></head>
+    <style type="text/css">/* Chart.js */
+  @-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}</style>
+  <style type="text/css">
+  .bg-primary { background: #00BCD4 !important; }
+  .bg-secondary { background: #FF5252 !important; }
+  .text-primary   { color:  #212121 !important; }
+  .text-secondary  { color: #757575 !important; }
+
+
+  </style>
+</head>
 
   <body>
-    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Charism.ai</a>
-      <input class="form-control form-control-dark w-100" placeholder="Search" aria-label="Search" type="text">
-<!--       <ul class="navbar-nav px-3">
-        <li class="nav-item text-nowrap">
-          <a class="nav-link" href="#">Sign out</a>
-        </li>
-      </ul> -->
+    <nav class="container-fluid bg-primary">
+        <a class="col-sm-12 navbar-brand text-center text-dark bg-primary" href="#">Charism.ai</a>
     </nav>
 
-    <div class="container-fluid">
+    <div class="container-fluid bg-primary">
       <div class="row">
-        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-          <div class="sidebar-sticky">
-            <ul class="nav flex-column">
-              <li class="nav-item">
-                <a class="nav-link active" href="#">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                  Dashboard <span class="sr-only">(current)</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <img name="playButton" id="playButton" src="images/play-circle.svg" onclick="togglePlayButton()"/>
-                  <!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg> -->
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <img src="images/refresh.svg">
-                </a>
-              </li>
-            </ul>
-          </div>
-        </nav>
 
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4"><div style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
-          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-            <h1 class="h2">Analysis</h1>
-            <div class="btn-toolbar mb-2 mb-md-0">
-              <div class="btn-group mr-2">
-                <button class="btn btn-sm btn-outline-secondary">Share</button>
-                <button class="btn btn-sm btn-outline-secondary">Export</button>
+        <main role="main" class="col-md-12 ml-sm-auto col-lg-12 pt-3 px-4"><div style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+          <div class=row>
+            <div class="col-sm-6">
+              <h1 class="h2 text-center">Video</h1>
+              <div class="border-top border-primary text-center">
+                <div class="text-center row">
+                  <video id="recorded" class="col-md-6" loop controls></video>
+                  <video id="gum" class="col-sm-6" autoplay muted></video>
+                </div>
+                <div class="text-center">
+                  <button class="btn btn-primary bg-secondary " type="submit" id="record" disabled>Record</button>
+                   <button class="btn btn-primary bg-secondary " type="submit" id="play" disabled>Play
+                   </button>
+                    <button class="btn btn-primary bg-secondary " type="submit" id="download" disabled>
+                    Download&nbsp;
+                  </button>
+
+<!--                   <button id="record" disabled>Start Recording</button>
+                  <button id="play" disabled>Play</button>
+                  <button id="download" disabled>Download</button> -->
+                </div>
+              </div>
+              <h1 class="h2 text-center">Response</h1>
+              <div class="border-top border-primary">
+              </div>
+<!--               <div class="btn-toolbar mb-2 mb-md-0">
+                <div class="btn-group mr-2">
+                  <button class="btn btn-sm btn-outline-secondary">Recommendations</button>
+                  <button class="btn btn-sm btn-outline-secondary">Share</button>
+                </div>
+              </div> -->
+            </div>
+            <div class="col-md-6">
+              <div class="container-fluid">
+                <h1 class="h2 text-center">Analysis</h1>
+                <div class="border-top border-primary container-fluid" id="Plot-Container">
+                  <div class="" id="emotion"></div>
+                  <div class="" id="energy"></div>
+                </div>
               </div>
             </div>
-          </div>
-
-          <canvas class="my-4 chartjs-render-monitor" id="myChart" width="1538" height="649" style="display: block; width: 1538px; height: 649px;"></canvas>
-
-          <h2>Section title</h2>
-          <div class="row">
-            <div id="container">
-              <video id="gum" autoplay muted></video>
-              <video id="recorded" loop controls></video>
-            </div>
-            <div>
-              <button id="record" disabled>Start Recording</button>
-              <button id="play" disabled>Play</button>
-              <button id="download" disabled>Download</button>
-            </div>
-            <div class="row" id="emotion"></div>
-            <div class="row" id="energy"></div>
-            <div class="row" id="volume"></div>
           </div>
         </main>
       </div>
     </div>
 
+    <script src="js/main2.js"></script>
+    <script src="js/soundmeter.js"></script>
+
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/jquery-3.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="js/jquery-3.js"></script>
     <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
     <script src="js/popper.js"></script>
     <script src="js/bootstrap.js"></script>
@@ -107,34 +114,6 @@
     <!-- Graphs -->
     <script src="js/Chart.js"></script>
     <script>
-      var ctx = document.getElementById("myChart");
-      var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-          datasets: [{
-            data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-            lineTension: 0,
-            backgroundColor: 'transparent',
-            borderColor: '#007bff',
-            borderWidth: 4,
-            pointBackgroundColor: '#007bff'
-          }]
-        },
-        options: {
-          scales: {
-            yAxes: [{
-              ticks: {
-                beginAtZero: false
-              }
-            }]
-          },
-          legend: {
-            display: false,
-          }
-        }
-      });
-
       //get Azure data here, will be arrays of arrays
       xEm = [];
       yEm = [];
@@ -147,8 +126,8 @@
         }
       }
       //---------------------------------------
-      xEn = [];
-      yEn = [];
+      xEn = [[4,5],[6,3,1]];
+      yEn = [[6,2,1]];
       dataEn = []; //each trace
       for(var i = 0; i < xEn.length; i++) {
         dataEn[i] = {
@@ -157,24 +136,16 @@
           type: "scatter"
         }
       }
-      Plotly.newPlot('emotion', dataEm);
-      Plotly.newPlot('energy', dataEn);
-
-      function togglePlayButton() {
-        if (document.getElementById("playButton").src.includes("images/play-circle.svg"))
-        {
-            document.getElementById("playButton").src = "images/pause-circle.svg";
-        }
-        else 
-        {
-          document.getElementById("playButton").src = "images/play-circle.svg";
-        }
-      }
+      Plotly.newPlot('emotion', dataEm, {width: 852.5, autosize: true});
+      Plotly.newPlot('energy', dataEn, {width: 852.5, autosize: true});
     </script>
 
+    <script type="text/javascript">
+      console.log("volData:",volData);
+    </script>
   </body>
 
-        <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
-    <script src="main.js"></script>
+    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+    <script src="css/main.js"></script>
 
 </html>
