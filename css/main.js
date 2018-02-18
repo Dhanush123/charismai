@@ -133,8 +133,10 @@ function startRecording() {
         for (var i = event.resultIndex; i < event.results.length; ++i) {
           if (event.results[i].isFinal) {
             final_transcript += event.results[i][0].transcript;
+            document.getElementById("voiceTranscript").value = final_transcript;
           } else {
             interim_transcript += event.results[i][0].transcript;
+            document.getElementById("voiceTranscript").value = interim_transcript;
           }
         }
         final_transcript = capitalize(final_transcript);
