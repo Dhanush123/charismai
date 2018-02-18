@@ -179,7 +179,7 @@ function stopRecording() {
     method: 'POST',
     headers: {
     },
-    body: formData, webm_filename
+    body: webm_filename
   }).then(r => console.log('r', r));
 
   setupVolumeGraph();

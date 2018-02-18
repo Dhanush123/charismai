@@ -209,11 +209,11 @@
               pitchY.unshift(data[length-i]["pitch"]);
               yawY.unshift(data[length-i]["yaw"]);
 
-              if(typeof data[length-i]["keywords"] != 'undefined') {
-                for(var k=0; k < data[length-i]["keywords"].length; k++) {
-                  entities.push(data[length-i]["keywords"][k]);
-                }
-               }
+              // if(typeof data[length-i]["keywords"] != 'undefined') {
+              //   for(var k=0; k < data[length-i]["keywords"].length; k++) {
+              //     entities.push(data[length-i]["keywords"][k]);
+              //   }
+              //  }
               i -= 1;
             }
             console.log(sentX,sentY);
@@ -234,17 +234,20 @@
             dataRoll = {
               x: rpyX,
               y: rollY,
-              type: "scatter"
+              type: "scatter",
+              name: "Roll"
             }
             dataPitch = {
               x: rpyX,
               y: pitchY,
-              type: "scatter"
+              type: "scatter",
+              name: "Pitch"
             }
             dataYaw = {
               x: rpyX,
               y: yawY,
               type: "scatter",
+              name: "Yaw",
               marker: {
                 colors: ['rgb(99, 79, 37)', 'rgb(129, 180, 179)', 'rgb(124, 103, 37)']
               }
@@ -260,7 +263,7 @@
 
 
             var entities = Array.from(new Set(entities));
-            document.getElementById("entities").value = "Main Ideas: " + entities 
+            document.getElementById("entities").value = "Main Ideas: " + entities; 
           }
         });
 
