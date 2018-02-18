@@ -138,7 +138,7 @@ function startRecording() {
           }
         }
         final_transcript = capitalize(final_transcript);
-        lb = linebreak(final_transcript);
+        var lb = linebreak(final_transcript);
         document.getElementById("voiceTranscript").value = lb;
         console.log("transcript:",lb);
         // interim_span.innerHTML = linebreak(interim_transcript);
