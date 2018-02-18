@@ -80,7 +80,7 @@
               <div class="border-top border-primary">
                 <span class="bmd-form-group">
                   <div>
-                    <p id="voiceTranscript"></p>
+                    <p class="text"> id="voiceTranscript"></p>
                   </div>
                 </span>
               </div>
@@ -232,7 +232,10 @@
             dataYaw = {
               x: rpyX,
               y: yawY,
-              type: "scatter"
+              type: "scatter",
+              marker: {
+                colors: ["#99004C","#00FF00","#B266FF"]
+              }
             }
 
             var layoutEm = {
