@@ -28,7 +28,7 @@
     <style type="text/css">/* Chart.js */
   @-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}</style>
   <style type="text/css">
-  .bg-primary { background:  linear-gradient(to top, #3399ff 0%, #ffcc99 100%) !important; }
+  .bg-primary { background:  linear-gradient(to top, #ff6666 0%, #ffff66 100%) !important; }
   .bg-secondary { background: #FF5252 !important; }
   .text-primary   { color:  #212121 !important; }
   .text-secondary  { color: #757575 !important; }
@@ -70,11 +70,9 @@
                 </div>
                 <div class="text-center">
                   <div class="btn-group" data-toggle="buttons">
-                    <button class="btn btn-dark btn-outline-dark text-primary active" type="submit" id="record" disabled>Record</button>
-                    <button class="btn btn-dark btn-outline-dark text-primary active" type="submit" id="play" disabled>Play
-                     </button>
-                    <button class="btn btn-dark btn-outline-dark text-primary active" type="submit" id="download" disabled>Download
-                    </button>
+                    <button class="btn text-light active" type="submit" id="record" disabled>Record</button>
+                    <button class="btn text-light active" type="submit" id="play" disabled>Play</button>
+                    <button class="btn btn-dark text-light active" type="submit" id="download" disabled>Download</button>
                   </div>
                 </div>
               </div>
@@ -157,6 +155,15 @@
           sentX.push(i);
       }
 
+      var ultimateColors = [
+  ['rgb(56, 75, 126)', 'rgb(18, 36, 37)', 'rgb(34, 53, 101)', 'rgb(36, 55, 57)', 'rgb(6, 4, 4)','rgb(129, 180, 179)', 'rgb(124, 103, 37)','rgb(177, 127, 38)'],
+  ['rgb(177, 127, 38)', 'rgb(205, 152, 36)', 'rgb(99, 79, 37)', 'rgb(129, 180, 179)', 'rgb(124, 103, 37)','rgb(56, 75, 126)', 'rgb(18, 36, 37)', 'rgb(34, 53, 101)'],
+  ['rgb(33, 75, 99)', 'rgb(79, 129, 102)', 'rgb(151, 179, 100)', 'rgb(175, 49, 35)', 'rgb(36, 73, 147)','rgb(205, 152, 36)', 'rgb(99, 79, 37)', 'rgb(129, 180, 179)'],
+  ['rgb(146, 123, 21)', 'rgb(177, 180, 34)', 'rgb(206, 206, 40)', 'rgb(175, 51, 21)', 'rgb(35, 36, 21)','rgb(33, 75, 99)', 'rgb(79, 129, 102)', 'rgb(151, 179, 100)']
+];
+
+    var pieColors = ultimateColors.sort(() => .5 - Math.random()).slice(0,emoLabels.length);
+
       function getData () {
 
         var xhr = new XMLHttpRequest();
@@ -192,7 +199,10 @@
             dataEm = [{
               values: emoCount,
               labels: emoLabels,
-              type: "pie"
+              type: "pie",
+               marker: {
+                  colors: ultimateColors[Math.floor(Math.random()*ultimateColors.length)]
+                }
             }];
             var layoutEm = {
               height: 700,

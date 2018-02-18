@@ -232,5 +232,5 @@ function setupVolumeGraph() {
     line: {shape: 'spline'},
     type: "scatter"
   };
-  Plotly.newPlot('volume', volGraph, {title: "Volume", width: 800, autosize: true});
+  Plotly.newPlot('volume', volGraph, {title: "Confidence", width: 800, autosize: true,paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)'});
 }
