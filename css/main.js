@@ -138,7 +138,9 @@ function startRecording() {
           }
         }
         final_transcript = capitalize(final_transcript);
-        document.getElementById("voiceTranscript").value = linebreak(final_transcript);
+        lb = linebreak(final_transcript);
+        document.getElementById("voiceTranscript").value = lb;
+        console.log("transcript:",lb);
         // interim_span.innerHTML = linebreak(interim_transcript);
       };
     }
@@ -219,5 +221,5 @@ function setupVolumeGraph() {
   };
   console.log("volGraph");
   console.log(volGraph);
-  Plotly.newPlot('volume', volGraph, {width: 852.5, autosize: true});
+  Plotly.newPlot('volume', volGraph, {title: "Volume", width: 852.5, autosize: true});
 }
