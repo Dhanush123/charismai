@@ -20,20 +20,23 @@ var downloadButton = document.querySelector('button#download');
 recordButton.onclick = toggleRecording;
 playButton.onclick = play;
 downloadButton.onclick = download;
-recordButton.textContent = 'Start Recording';
+recordButton.textContent = 'Start';
 
 // window.isSecureContext could be used for Chrome
-var isSecureOrigin = location.protocol === 'https:' ||
-location.hostname === 'localhost';
-if (!isSecureOrigin) {
-  alert('getUserMedia() must be run from a secure origin: HTTPS or localhost.' +
-    '\n\nChanging protocol to HTTPS');
-  location.protocol = 'HTTPS';
-}
+// var isSecureOrigin = location.protocol === 'https:' ||
+// location.hostname === 'localhost';
+// if (!isSecureOrigin) {
+//   alert('getUserMedia() must be run from a secure origin: HTTPS or localhost.' +
+//     '\n\nChanging protocol to HTTPS');
+//   location.protocol = 'HTTPS';
+// }
 
 var constraints = {
   audio: true,
-  video: true
+  video: {
+    width: { max: 550 },
+    height: { max: 550 }
+  }
 };
 
 function handleSuccess(stream) {
@@ -47,24 +50,20 @@ function handleError(error) {
   console.log('navigator.getUserMedia error: ', error);
 }
 
+navigator.mediaDevices.getUserMedia(constraints).
+    then(handleSuccess).catch(handleError);
+
 function handleSourceOpen(event) {
   console.log('MediaSource opened');
   sourceBuffer = mediaSource.addSourceBuffer('video/webm; codecs="vp8"');
   console.log('Source buffer: ', sourceBuffer);
 }
 
-console.log("hello");
-
 recordedVideo.addEventListener('error', function(ev) {
   console.error('MediaRecording.recordedMedia.error()');
   alert('Your browser can not play\n\n' + recordedVideo.src
     + '\n\n media clip. event: ' + JSON.stringify(ev));
 }, true);
-
-console.log("no error");
-
-navigator.mediaDevices.getUserMedia(constraints).
-    then(handleSuccess).catch(handleError);
 
 function handleDataAvailable(event) {
   if (event.data && event.data.size > 0) {
@@ -77,11 +76,11 @@ function handleStop(event) {
 }
 
 function toggleRecording() {
-  if (recordButton.textContent === 'Start Recording') {
+  if (recordButton.textContent === 'Start') {
     startRecording();
   } else {
     stopRecording();
-    recordButton.textContent = 'Start Recording';
+    recordButton.textContent = 'Start';
     playButton.disabled = false;
     downloadButton.disabled = false;
   }
@@ -233,5 +232,5 @@ function setupVolumeGraph() {
     line: {shape: 'spline'},
     type: "scatter"
   };
-  Plotly.newPlot('volume', volGraph, {title: "Volume", width: 852.5, autosize: true});
+  Plotly.newPlot('volume', volGraph, {title: "Volume", width: 800, autosize: true});
 }

@@ -3,7 +3,6 @@
 
   <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
 
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
@@ -35,6 +34,8 @@
   .text-secondary  { color: #757575 !important; }
   </style>
 
+  <script type="text/javascript" src="js/data.js"></script>
+
 <!--   <div class="navbar navbar-dark bg-dark box-shadow">
         <div class="container d-flex" style="text-align: center; color: #212121">
             <strong>Charism.ai</strong>
@@ -42,7 +43,7 @@
       </div> -->
 </head>
 
-  <body>
+  <body class=navbar-fixed-bottom">
 <!--     <nav class="container-fluid bg-primary">
         <a class="col-sm-12 navbar-brand text-center text-dark bg-primary" href="#">Charism.ai</a>
     </nav>
@@ -63,18 +64,18 @@
             <div class="col-md-6">
               <h1 class="h2 text-center">Video</h1>
               <div class="border-top border-primary text-center">
-                <div class="row">
-                  <video id="recorded" loop controls></video>
-                  <video id="gum" autoplay muted></video>
+                <div class="row flex-md-nowrap container-fluid text-center">
+                    <video id="recorded" class="p-1" loop controls></video>
+                    <video id="gum" class="p-1" autoplay muted></video>
                 </div>
                 <div class="text-center">
-                  <button class="btn btn-primary bg-secondary " type="submit" id="record" disabled>Record</button>
-                  <button class="btn btn-primary bg-secondary " type="submit" id="play" disabled>Play
-                   </button>
-                  <button class="btn btn-primary bg-secondary " type="submit" id="download" disabled>Transcript
-                  </button>
-                   <button class="btn btn-primary bg-secondary " type="submit" id="download2" onclick="reportDownload()" disabled>Report
-                  </button>
+                  <div class="btn-group" data-toggle="buttons">
+                    <button class="btn btn-dark btn-outline-dark text-primary active" type="submit" id="record" disabled>Record</button>
+                    <button class="btn btn-dark btn-outline-dark text-primary active" type="submit" id="play" disabled>Play
+                     </button>
+                    <button class="btn btn-dark btn-outline-dark text-primary active" type="submit" id="download" disabled>Download
+                    </button>
+                  </div>
                 </div>
               </div>
               <h1 class="h2 text-center">Response</h1>
@@ -102,7 +103,6 @@
         </main>
       </div>
     </div>
-
     <script src="js/main2.js"></script>
     <script src="js/soundmeter.js"></script>
 
@@ -123,31 +123,97 @@
     <!-- Graphs -->
     <script src="js/Chart.js"></script>
     <script>
-      //get Azure data here, will be arrays of arrays
-      xEm = [];
-      yEm = [];
-      dataEm = []; //each trace
-      for(var i = 0; i < xEm.length; i++) {
-        dataEm[i] = {
-          x: xEm[i],
-          y: yEm[i],
-          type: "scatter"
-        }
-      }
+      // dataEm = []; //each trace
+      // for(var i = 0; i < xEm.length; i++) {
+      //   dataEm[i] = {
+      //     x: xEm[i],
+      //     y: yEm[i],
+      //     type: "scatter"
+      //   }
+      // }
       //---------------------------------------
-      xEn = [[4,5],[6,3,1]];
-      yEn = [[6,2,1]];
-      dataEn = []; //each trace
-      for(var i = 0; i < xEn.length; i++) {
-        dataEn[i] = {
-          x: xEn[i],
-          y: yEn[i],
-          type: "scatter"
+
+            var mongoSettings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "https://api.mlab.com/api/1/databases/th18/collections/analyses?apiKey=keHd4eKyrvVivRJk-LlGKbVlAwVezEtE",
+        "method": "GET",
+        "headers": {
+          "content-type": "application/json; charset=utf-8",
         }
+      };
+
+      var data = null;
+      var numFrames = 10;
+
+      var sentX = [];
+      var sentY = [];
+
+      var emoCount = [0,0,0,0,0,0,0,0];
+
+      var emoLabels = ["anger","contempt","disgust","fear","happiness","neutral","sadness","surprise"];
+
+      for (var i = 0; i < numFrames; i++) {
+          sentX.push(i);
       }
 
-      Plotly.newPlot('emotion', dataEm, {title: "Emotion", width: 800, autosize: true});
-      Plotly.newPlot('energy', dataEn, {title: "Energy", width: 800, autosize: true});
+      function getData () {
+
+        var xhr = new XMLHttpRequest();
+        xhr.withCredentials = false;
+
+        xhr.addEventListener("readystatechange", function () {
+          console.log("got response");
+          if (this.readyState === 4) {
+            console.log(this.response);
+            data = this.response;
+            var length = data.length;
+            console.log(length);
+            var i = numFrames;
+
+            while (i > 0 && typeof data[length-i] != 'undefined') {
+              sentY.unshift(data[length-i]["sentiment"]);
+                if(typeof data[length-i]["expression"] != 'undefined'){
+                  for(var j = 0; j < emoLabels.length;j++){
+                    if (data[length-i]["expression"] == emoLabels[j]) {
+                      emoCount[j] += 1;
+                      continue;
+                    } 
+                  }
+                }
+              i -= 1;
+            }
+            console.log(sentX,sentY);
+            dataEn = {
+              x: sentX,
+              y: sentY,
+              type: "scatter"
+            }
+            dataEm = [{
+              values: emoCount,
+              labels: emoLabels,
+              type: "pie"
+            }];
+            var layoutEm = {
+              height: 700,
+              width: 700
+            };
+            Plotly.newPlot('energy', [dataEn], {title: "Energy", width: 800, autosize: true,paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)'});
+            Plotly.newPlot('emotion', dataEm,  {title: "Emotion", width: 800, autosize: true,paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)'});
+          }
+        });
+
+        var placeholder = "";
+
+        xhr.open("GET", "https://api.mlab.com/api/1/databases/th18/collections/analyses?apiKey=keHd4eKyrvVivRJk-LlGKbVlAwVezEtE");
+        xhr.setRequestHeader("content-type", "application/json; charset=utf-8");
+        xhr.responseType = 'json';
+
+        xhr.send(placeholder);
+
+      }
+      getData();
+      
 
     </script>
 
@@ -167,6 +233,7 @@
 
 
     <script src="js/html2pdf.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   </body>
  
 </html>

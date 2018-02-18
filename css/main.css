@@ -14,7 +14,10 @@
   width: 80%;
   background-color: red;
 }*/
-
+body {
+  padding: 0;
+  height: 100%;
+}
 /* Clear floats after the columns */
 .nav:after {
     content: "";

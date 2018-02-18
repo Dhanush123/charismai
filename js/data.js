@@ -8,9 +8,25 @@ var mongoSettings = {
   }
 };
 
+var data = null;
+var numFrames = 15;
+
+var sentX = [];
+var sentY = [];
+
+
+for (var i = 0; i < numFrames; i++) {
+    sentY.push(i);
+}
+
 function getData () {
   $.ajax(mongoSettings).done(function (res) {
-    var data = res;
-    
+    data = res;
+    var length = data.length;
+    var i = numFrames;
+    while (i > 0 && typeof data[length-i] != 'undefined') {
+      sentX.unshift(data[length-i]);
+      i -= 1;
+    }
   });
 }
