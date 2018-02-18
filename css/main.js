@@ -2,6 +2,7 @@
 
 /* globals MediaRecorder */
 var recognition;
+var final_transcript = '';
 
 var mediaSource = new MediaSource();
 mediaSource.addEventListener('sourceopen', handleSourceOpen, false);
@@ -123,7 +124,6 @@ function startRecording() {
       recognition.onresult = function(event) { }
       recognition.onerror = function(event) { }
       recognition.onend = function() {}
-      final_transcript = '';
       recognition.lang = "en-US";
       recognition.start();
 
@@ -146,7 +146,9 @@ function startRecording() {
     }
 }
 
-
+function linebreak(s) {
+  return s.replace(two_line, '<p></p>').replace(one_line, '<br>');
+}
 
 function stopRecording() {
   mediaRecorder.stop();
@@ -208,7 +210,7 @@ function setupVolumeGraph() {
   var volGraph = [];
   var clean_volData = [];
   var counter = 0;
-  for (i = 0; i < volData.length; i++) {
+  for (var i = 0; i < volData.length; i++) {
     if (volData[i] != "0.00") {
       clean_volData[counter] = volData[i];
       counter++;
