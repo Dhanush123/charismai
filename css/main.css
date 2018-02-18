@@ -42,9 +42,8 @@ p.borderBelow {
   padding: 0 0 20px 0;
 }
 
-video {
-  padding: 0px 0px 0px 0px;
-}
+/*video {
+}*/
 
 /*
 @media screen and (max-width: 500px) {

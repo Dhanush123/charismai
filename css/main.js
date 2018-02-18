@@ -129,6 +129,8 @@ function stopRecording() {
     // },
     body: formData
   }).then(r => console.log('r', r));
+
+  setupVolumeGraph();
 }
 
 function play() {
@@ -163,4 +165,17 @@ function download() {
     document.body.removeChild(a);
     window.URL.revokeObjectURL(url);
   }, 100);
+}
+
+function setupVolumeGraph() {
+  console.log("setting up volume");
+  var volGraph = {};
+  for(var i = 0; i < volData.length; i++) {
+    volGraph[i] = {
+      x: i,
+      y: volData[i],
+      type: "scatter"
+    }
+  }
+  Plotly.newPlot('volume', volGraph, {width: 852.5, autosize: true});
 }

@@ -35,6 +35,7 @@ function handleSuccess(stream) {
     setInterval(function() {
       
     volData.push(soundMeter.instant.toFixed(2));
+    console.log(volData);
 
     }, 200);
   });
