@@ -208,7 +208,7 @@
               rollY.unshift(data[length-i]["roll"]);
               pitchY.unshift(data[length-i]["pitch"]);
               yawY.unshift(data[length-i]["yaw"]);
-
+              console.log("data[length-i].keywords",data[length-i].keywords);
               if(typeof data[length-i].keywords != 'undefined') {
                 for(var k=0; k < data[length-i].keywords.length; k++) {
                   entities.push(data[length-i].keywords[k]);
@@ -263,7 +263,7 @@
 
 
             entities = Array.from(new Set(entities));
-            document.getElementById("entities").value = "Main Ideas: " + entities; 
+            document.getElementById("entities").innerHTML = "Main Ideas: " + entities; 
           }
         });
 
