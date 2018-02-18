@@ -1,6 +1,7 @@
 'use strict';
 
 /* globals MediaRecorder */
+var recognition;
 
 var mediaSource = new MediaSource();
 mediaSource.addEventListener('sourceopen', handleSourceOpen, false);
@@ -17,6 +18,7 @@ var downloadButton = document.querySelector('button#download');
 recordButton.onclick = toggleRecording;
 playButton.onclick = play;
 downloadButton.onclick = download;
+recordButton.textContent = 'Start Recording';
 
 // window.isSecureContext could be used for Chrome
 var isSecureOrigin = location.protocol === 'https:' ||
@@ -110,7 +112,39 @@ function startRecording() {
   mediaRecorder.ondataavailable = handleDataAvailable;
   mediaRecorder.start(10); // collect 10ms of data
   console.log('MediaRecorder started', mediaRecorder);
+  if (!('webkitSpeechRecognition' in window)) {
+    // alert("Speech recognition not supported...");
+  } else {
+      recognition = new webkitSpeechRecognition();
+      recognition.continuous = true;
+      recognition.interimResults = true;
+
+      recognition.onstart = function() { }
+      recognition.onresult = function(event) { }
+      recognition.onerror = function(event) { }
+      recognition.onend = function() {}
+      final_transcript = '';
+      recognition.lang = "en-US";
+      recognition.start();
+
+      recognition.onresult = function(event) {
+        var interim_transcript = '';
+
+        for (var i = event.resultIndex; i < event.results.length; ++i) {
+          if (event.results[i].isFinal) {
+            final_transcript += event.results[i][0].transcript;
+          } else {
+            interim_transcript += event.results[i][0].transcript;
+          }
+        }
+        final_transcript = capitalize(final_transcript);
+        final_span.innerHTML = linebreak(final_transcript);
+        // interim_span.innerHTML = linebreak(interim_transcript);
+      };
+    }
 }
+
+
 
 function stopRecording() {
   mediaRecorder.stop();
@@ -169,13 +203,13 @@ function download() {
 
 function setupVolumeGraph() {
   console.log("setting up volume");
-  var volGraph = {};
-  for(var i = 0; i < volData.length; i++) {
-    volGraph[i] = {
-      x: i,
-      y: volData[i],
-      type: "scatter"
-    }
-  }
+  var volGraph = [];
+  volGraph[0] = {
+    x: Array.apply(null, {length: volData.length}).map(Function.call, Number),
+    y: volData,
+    type: "scatter"
+  };
+  console.log("volGraph");
+  console.log(volGraph);
   Plotly.newPlot('volume', volGraph, {width: 852.5, autosize: true});
 }

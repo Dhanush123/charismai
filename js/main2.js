@@ -33,10 +33,7 @@ function handleSuccess(stream) {
       return;
     }
     setInterval(function() {
-      
-    volData.push(soundMeter.instant.toFixed(2));
-    console.log(volData);
-
+      volData.push(soundMeter.instant.toFixed(2));
     }, 200);
   });
 }
