@@ -145,6 +145,8 @@ function startRecording() {
         var lb = linebreak(final_transcript);
         document.getElementById("voiceTranscript").value = lb;
         console.log("transcript:",lb);
+        var transcript_p = document.getElementById("voiceTranscript");
+        transcript_p.innerHTML = lb;
         // interim_span.innerHTML = linebreak(interim_transcript);
       };
     }
@@ -168,16 +170,16 @@ function stopRecording() {
 
   var formData = new FormData();
   var blob = new Blob(recordedBlobs, { type: 'video/webm' });
+  formData.append("ImageFileField", blob, "video.webm");
 
-  formData.append('video', blob);
+  blob.name = "video.webm";
 
-
-  // fetch('http://35.202.223.122:8080/record', {
-  //   method: 'POST',
-  //   headers: {
-  //   },
-  //   body: formData
-  // }).then(r => console.log('r', r));
+  fetch('http://968fc626.ngrok.io/record', {
+    method: 'POST',
+    headers: {
+    },
+    body: formData
+  }).then(r => console.log('r', r));
 
   setupVolumeGraph();
 }
