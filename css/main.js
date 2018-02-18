@@ -13,7 +13,7 @@ var sourceBuffer;
 
 var gumVideo = document.querySelector('video#gum');
 var recordedVideo = document.querySelector('video#recorded');
-
+// var recordedVideo = document.getElementById('recorded');
 var recordButton = document.querySelector('button#record');
 var playButton = document.querySelector('button#play');
 var downloadButton = document.querySelector('button#download');
@@ -47,20 +47,24 @@ function handleError(error) {
   console.log('navigator.getUserMedia error: ', error);
 }
 
-navigator.mediaDevices.getUserMedia(constraints).
-    then(handleSuccess).catch(handleError);
-
 function handleSourceOpen(event) {
   console.log('MediaSource opened');
   sourceBuffer = mediaSource.addSourceBuffer('video/webm; codecs="vp8"');
   console.log('Source buffer: ', sourceBuffer);
 }
 
+console.log("hello");
+
 recordedVideo.addEventListener('error', function(ev) {
   console.error('MediaRecording.recordedMedia.error()');
   alert('Your browser can not play\n\n' + recordedVideo.src
     + '\n\n media clip. event: ' + JSON.stringify(ev));
 }, true);
+
+console.log("no error");
+
+navigator.mediaDevices.getUserMedia(constraints).
+    then(handleSuccess).catch(handleError);
 
 function handleDataAvailable(event) {
   if (event.data && event.data.size > 0) {
