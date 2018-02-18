@@ -57,7 +57,9 @@
                   <button class="btn btn-primary bg-secondary " type="submit" id="record" disabled>Record</button>
                   <button class="btn btn-primary bg-secondary " type="submit" id="play" disabled>Play
                    </button>
-                  <button class="btn btn-primary bg-secondary " type="submit" id="download" disabled>Download
+                  <button class="btn btn-primary bg-secondary " type="submit" id="download" disabled>Transcript
+                  </button>
+                   <button class="btn btn-primary bg-secondary " type="submit" id="download2" onclick="reportDownload();" disabled>Report
                   </button>
                 </div>
               </div>
@@ -126,7 +128,6 @@
         dataEn[i] = {
           x: xEn[i],
           y: yEn[i],
-          line: {shape: 'spline'}, 
           type: "scatter"
         }
       }
@@ -149,6 +150,14 @@
       window.addEventListener('resize', function() { Plotly.Plots.resize('energy'); });
       window.addEventListener('resize', function() { Plotly.Plots.resize('volume'); });
     </script>
+    <script type="text/javascript">
+      function reportDownload() {
+        var element = document.getElementById('download2');
+        html2pdf(element);
+      }
+    </script>
+
+    <script src="js/html2pdf.bundle.min.js"></script>
   </body>
  
 </html>

@@ -114,7 +114,7 @@ function startRecording() {
   mediaRecorder.start(10); // collect 10ms of data
   console.log('MediaRecorder started', mediaRecorder);
   if (!('webkitSpeechRecognition' in window)) {
-    // alert("Speech recognition not supported...");
+    alert("Speech recognition not supported...");
   } else {
       recognition = new webkitSpeechRecognition();
       recognition.continuous = true;
@@ -229,6 +229,7 @@ function setupVolumeGraph() {
   volGraph[0] = {
     x: Array.apply(null, {length: volData.length}).map(Function.call, Number),
     y: clean_volData,
+    line: {shape: 'spline'}, 
     type: "scatter"
   };
   Plotly.newPlot('volume', volGraph, {title: "Volume", width: 852.5, autosize: true});
