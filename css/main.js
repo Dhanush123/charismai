@@ -120,7 +120,9 @@ function startRecording() {
       recognition.continuous = true;
       recognition.interimResults = true;
 
-      recognition.onstart = function() { }
+      recognition.onstart = function() { 
+        recognizing = true;
+      }
       recognition.onresult = function(event) { }
       recognition.onerror = function(event) { }
       recognition.onend = function() {}
@@ -215,7 +217,6 @@ function download() {
 }
 
 function setupVolumeGraph() {
-  console.log("setting up volume");
   var volGraph = [];
   var clean_volData = [];
   var counter = 0;
@@ -230,7 +231,5 @@ function setupVolumeGraph() {
     y: clean_volData,
     type: "scatter"
   };
-  console.log("volGraph");
-  console.log(volGraph);
   Plotly.newPlot('volume', volGraph, {title: "Volume", width: 852.5, autosize: true});
 }
