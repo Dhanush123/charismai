@@ -217,7 +217,7 @@ function download() {
     document.body.removeChild(a);
     window.URL.revokeObjectURL(url);
   }, 100);
-  getData();
+  // getData();
 }
 
 function setupVolumeGraph() {
