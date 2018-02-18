@@ -5,6 +5,8 @@ var recognition;
 var recordedVideo;
 var final_transcript = '';
 
+var webm_filename = '';
+
 var mediaSource = new MediaSource();
 mediaSource.addEventListener('sourceopen', handleSourceOpen, false);
 var mediaRecorder;
@@ -143,7 +145,7 @@ function startRecording() {
         }
         final_transcript = capitalize(final_transcript);
         var lb = linebreak(final_transcript);
-        // document.getElementById("voiceTranscript").value = lb;
+        //document.getElementById("voiceTranscript").value = lb;
         console.log("transcript:",lb);
         var transcript_p = document.getElementById("voiceTranscript");
         console.log(transcript_p);
@@ -171,15 +173,13 @@ function stopRecording() {
 
   var formData = new FormData();
   var blob = new Blob(recordedBlobs, { type: 'video/webm' });
-  formData.append("ImageFileField", blob, "video.webm");
 
-  blob.name = "video.webm";
-
+  webm_filename = prompt('What would you like to name your recording?') + ".webm";
   fetch('http://968fc626.ngrok.io/record', {
     method: 'POST',
     headers: {
     },
-    body: formData
+    body: formData, webm_filename
   }).then(r => console.log('r', r));
 
   setupVolumeGraph();
@@ -210,7 +210,7 @@ function download() {
   var a = document.createElement('a');
   a.style.display = 'none';
   a.href = url;
-  a.download = 'test.webm';
+  a.download = webm_filename;
   document.body.appendChild(a);
   a.click();
   setTimeout(function() {

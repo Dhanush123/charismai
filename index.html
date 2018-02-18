@@ -69,18 +69,21 @@
                     <video id="gum" class="p-1" autoplay muted></video>
                 </div>
                  <div class="text-center">
-                   <div class="btn-group" role="group" data-toggle="buttons">
-                    <button class="btn active" type="submit" id="record" disabled>Record</button>
-                    <button class="btn active" type="submit" id="play" disabled>Replay</button>
-                    <button class="btn active" type="submit" id="download" disabled>Download</button>
+                   <div class="btn-group" role="group">
+                    <button class="btn btn-primary active" type="submit" id="record" disabled>Record</button>
+                    <button class="btn btn-primary active" type="submit" id="play" disabled>Replay</button>
+                    <button class="btn btn-primary active" type="submit" id="download" disabled>Download</button>
                   </div>
                  </div>
                </div>
               <h1 class="h2 text-center">Transcript</h1>
               <div class="border-top border-primary">
                 <span class="bmd-form-group">
+                  <p class="h4" id="entities"></p>
+                </span>
+                <span class="bmd-form-group">
                   <div>
-                    <p class="text"> id="voiceTranscript"></p>
+                    <p class="h4" id="voiceTranscript"></p>
                   </div>
                 </span>
               </div>
@@ -175,6 +178,9 @@
 
     var pieColors = ultimateColors.sort(() => .5 - Math.random()).slice(0,emoLabels.length);
 
+
+     var entities = [];
+
       function getData () {
 
         var xhr = new XMLHttpRequest();
@@ -202,6 +208,12 @@
               rollY.unshift(data[length-i]["roll"]);
               pitchY.unshift(data[length-i]["pitch"]);
               yawY.unshift(data[length-i]["yaw"]);
+
+              if(typeof data[length-i]["keywords"] != 'undefined') {
+                for(var k=0; k < data[length-i]["keywords"].length; k++) {
+                  entities.push(data[length-i]["keywords"][k]);
+                }
+               }
               i -= 1;
             }
             console.log(sentX,sentY);
@@ -234,7 +246,7 @@
               y: yawY,
               type: "scatter",
               marker: {
-                colors: ["#99004C","#00FF00","#B266FF"]
+                colors: ['rgb(99, 79, 37)', 'rgb(129, 180, 179)', 'rgb(124, 103, 37)']
               }
             }
 
@@ -245,6 +257,10 @@
             Plotly.newPlot('energy', [dataEn], {title: "Energy", width: 800, autosize: true,paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)'});
             Plotly.newPlot('emotion', dataEm,  {title: "Emotion", width: 800, autosize: true,paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)'});
             Plotly.newPlot('rpy', [dataRoll,dataPitch,dataYaw],  {title: "Roll, Pitch, Yaw", width: 800, autosize: true,paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)'});
+
+
+            var entities = Array.from(new Set(entities));
+            document.getElementById("entities").value = "Main Ideas: " + entities 
           }
         });
 
@@ -274,6 +290,7 @@
       window.addEventListener('resize', function() { Plotly.Plots.resize('emotion'); });
       window.addEventListener('resize', function() { Plotly.Plots.resize('energy'); });
       window.addEventListener('resize', function() { Plotly.Plots.resize('volume'); });
+      window.addEventListener('resize', function() { Plotly.Plots.resize('rpy'); });
     </script>
 
 
