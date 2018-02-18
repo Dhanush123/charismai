@@ -113,7 +113,7 @@ function startRecording() {
   mediaRecorder.start(10); // collect 10ms of data
   console.log('MediaRecorder started', mediaRecorder);
   if (!('webkitSpeechRecognition' in window)) {
-    // alert("Speech recognition not supported...");
+    alert("Speech recognition not supported...");
   } else {
       recognition = new webkitSpeechRecognition();
       recognition.continuous = true;
@@ -138,7 +138,7 @@ function startRecording() {
           }
         }
         final_transcript = capitalize(final_transcript);
-        final_span.innerHTML = linebreak(final_transcript);
+        document.getElementById("voiceTranscript").value = linebreak(final_transcript);
         // interim_span.innerHTML = linebreak(interim_transcript);
       };
     }
@@ -157,12 +157,12 @@ function stopRecording() {
   formData.append('video', blob);
 
 
-  fetch('http://35.202.223.122:8080/record', {
-    method: 'POST',
-    // headers: {
-    // },
-    body: formData
-  }).then(r => console.log('r', r));
+  // fetch('http://35.202.223.122:8080/record', {
+  //   method: 'POST',
+  //   headers: {
+  //   },
+  //   body: formData
+  // }).then(r => console.log('r', r));
 
   setupVolumeGraph();
 }
