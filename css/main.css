@@ -43,7 +43,8 @@ p.borderBelow {
 }
 
 video {
-  margin: 12px 12px 12px 12px;
+  margin: 5px 5px 5px 5px;
+  vertical-align: top;
 }
 
 /*
