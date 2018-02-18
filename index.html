@@ -209,11 +209,11 @@
               pitchY.unshift(data[length-i]["pitch"]);
               yawY.unshift(data[length-i]["yaw"]);
 
-              // if(typeof data[length-i]["keywords"] != 'undefined') {
-              //   for(var k=0; k < data[length-i]["keywords"].length; k++) {
-              //     entities.push(data[length-i]["keywords"][k]);
-              //   }
-              //  }
+              if(typeof data[length-i].keywords != 'undefined') {
+                for(var k=0; k < data[length-i].keywords.length; k++) {
+                  entities.push(data[length-i].keywords[k]);
+                }
+               }
               i -= 1;
             }
             console.log(sentX,sentY);
@@ -262,7 +262,7 @@
             Plotly.newPlot('rpy', [dataRoll,dataPitch,dataYaw],  {title: "Roll, Pitch, Yaw", width: 800, autosize: true,paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)'});
 
 
-            var entities = Array.from(new Set(entities));
+            entities = Array.from(new Set(entities));
             document.getElementById("entities").value = "Main Ideas: " + entities; 
           }
         });
