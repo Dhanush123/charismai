@@ -110,7 +110,7 @@ function startRecording() {
     return;
   }
   console.log('Created MediaRecorder', mediaRecorder, 'with options', options);
-  recordButton.textContent = 'Stop Recording';
+  recordButton.textContent = 'Stop';
   playButton.disabled = true;
   downloadButton.disabled = true;
   mediaRecorder.onstop = handleStop;
@@ -143,9 +143,10 @@ function startRecording() {
         }
         final_transcript = capitalize(final_transcript);
         var lb = linebreak(final_transcript);
-        document.getElementById("voiceTranscript").value = lb;
+        // document.getElementById("voiceTranscript").value = lb;
         console.log("transcript:",lb);
         var transcript_p = document.getElementById("voiceTranscript");
+        console.log(transcript_p);
         transcript_p.innerHTML = lb;
         // interim_span.innerHTML = linebreak(interim_transcript);
       };
