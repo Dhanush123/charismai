@@ -2,6 +2,7 @@
 
 /* globals MediaRecorder */
 var recognition;
+var recordedVideo;
 var final_transcript = '';
 
 var mediaSource = new MediaSource();
@@ -225,7 +226,7 @@ function setupVolumeGraph() {
   volGraph[0] = {
     x: Array.apply(null, {length: volData.length}).map(Function.call, Number),
     y: clean_volData,
-    line: {shape: 'spline'}, 
+    line: {shape: 'spline'},
     type: "scatter"
   };
   Plotly.newPlot('volume', volGraph, {title: "Volume", width: 852.5, autosize: true});
