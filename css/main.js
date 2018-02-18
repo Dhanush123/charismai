@@ -113,7 +113,7 @@ function startRecording() {
   mediaRecorder.start(10); // collect 10ms of data
   console.log('MediaRecorder started', mediaRecorder);
   if (!('webkitSpeechRecognition' in window)) {
-    alert("Speech recognition not supported...");
+    // alert("Speech recognition not supported...");
   } else {
       recognition = new webkitSpeechRecognition();
       recognition.continuous = true;
@@ -204,9 +204,17 @@ function download() {
 function setupVolumeGraph() {
   console.log("setting up volume");
   var volGraph = [];
+  var clean_volData = [];
+  var counter = 0;
+  for (i = 0; i < volData.length; i++) {
+    if (volData[i] != "0.00") {
+      clean_volData[counter] = volData[i];
+      counter++;
+    }
+  }
   volGraph[0] = {
     x: Array.apply(null, {length: volData.length}).map(Function.call, Number),
-    y: volData,
+    y: clean_volData,
     type: "scatter"
   };
   console.log("volGraph");
