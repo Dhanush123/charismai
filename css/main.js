@@ -119,10 +119,6 @@ function startRecording() {
       recognition = new webkitSpeechRecognition();
       recognition.continuous = true;
       recognition.interimResults = true;
-
-      recognition.onstart = function() { 
-        recognizing = true;
-      }
       recognition.onresult = function(event) { }
       recognition.onerror = function(event) { }
       recognition.onend = function() {}
